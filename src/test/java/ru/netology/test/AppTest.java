@@ -45,6 +45,6 @@ public class AppTest {
         var verificationCode = DataHelper.generateRandomVerificationCode();
         verificationPage.verify(verificationCode.getCode());
         verificationPage.verifyErrorNotificationVisibility(); // Проверка видимости уведомления об ошибке
-        verificationPage.verifyErrorNotificationText("Ошибка! Неверный код подтверждения"); // Проверка текста ошибки
+        verificationPage.verifyErrorNotificationText("Ошибка! Неверно указан код! Попробуйте ещё раз."); // Проверка текста ошибки
     }
 }
