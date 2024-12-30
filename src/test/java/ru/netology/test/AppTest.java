@@ -21,9 +21,10 @@ public class AppTest {
         var loginPage = open("http://localhost:9999", LoginPage.class);
         var authInfo = DataHelper.getAuthInfoWithTestData();
         var verificationPage = loginPage.validLogin(authInfo);
-        verificationPage.verifyVerificationPageVisiblity();
+        verificationPage.verifyVerificationPageVisibility();
         var verificationCode = SQLHelper.getCodeVerification();
-        verificationPage.validVerify(verificationCode.getCode());
+        var dashboardPage = verificationPage.validVerify(verificationCode.getCode());
+        dashboardPage.verifyHeaderText("Личный кабинет"); // Проверка текста хедера
     }
 
     @Test
@@ -31,7 +32,8 @@ public class AppTest {
         var loginPage = open("http://localhost:9999", LoginPage.class);
         var authInfo = DataHelper.generateRandomUser();
         loginPage.validLogin(authInfo);
-        loginPage.verifyErrorNotificationVisiblity();
+        loginPage.verifyErrorNotificationVisibility(); // Проверка видимости уведомления об ошибке
+        loginPage.verifyErrorNotificationText("Ошибка! Неверно указан логин или пароль"); // Проверка текста ошибки
     }
 
     @Test
@@ -39,9 +41,10 @@ public class AppTest {
         var loginPage = open("http://localhost:9999", LoginPage.class);
         var authInfo = DataHelper.getAuthInfoWithTestData();
         var verificationPage = loginPage.validLogin(authInfo);
-        verificationPage.verifyVerificationPageVisiblity();
+        verificationPage.verifyVerificationPageVisibility();
         var verificationCode = DataHelper.generateRandomVerificationCode();
         verificationPage.verify(verificationCode.getCode());
-        verificationPage.verifyErrorNotificationVisiblity();
+        verificationPage.verifyErrorNotificationVisibility(); // Проверка видимости уведомления об ошибке
+        verificationPage.verifyErrorNotificationText("Ошибка! Неверный код подтверждения"); // Проверка текста ошибки
     }
 }

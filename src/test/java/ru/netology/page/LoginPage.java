@@ -2,18 +2,22 @@ package ru.netology.page;
 
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
-
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage {
     private final SelenideElement loginField = $("[data-test-id=login] input");
     private final SelenideElement passwordField = $("[data-test-id=password] input");
     private final SelenideElement loginButton = $("[data-test-id=action-login]");
-    private final SelenideElement errorNotification = $("[data-test-id='error-notification']");
+    private final SelenideElement errorNotification = $("[data-test-id=error-notification]");
 
-    public void verifyErrorNotificationVisiblity() {
-        errorNotification.shouldBe(visible);
+    public void verifyErrorNotificationVisibility() {
+        errorNotification.shouldBe(visible); // Проверяем, что уведомление об ошибке отображается
+    }
+
+    public void verifyErrorNotificationText(String expectedText) {
+        errorNotification.shouldBe(visible).shouldHave(text(expectedText)); // Проверяем текст ошибки
     }
 
     public VerificationPage validLogin(DataHelper.AuthInfo info) {
@@ -22,6 +26,4 @@ public class LoginPage {
         loginButton.click();
         return new VerificationPage();
     }
-
-
 }
